@@ -1,4 +1,6 @@
-
+## exposing the env in linux
+`export MONGOURL=blah blah blah`
+`unset MONGOURL`
 
 
 
