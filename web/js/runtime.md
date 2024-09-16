@@ -67,3 +67,5 @@ If a function or operation is synchronous, it is pushed onto the Call Stack and 
     - Step 3: This process repeats, allowing JavaScript to manage both synchronous and asynchronous tasks efficiently.
 
 --- The Event Loop also allows time for garbage collection, where memory that is no longer needed is freed up.
+
+![alt text](https://github.com/user-attachments/assets/5231558f-40eb-47e6-974b-1164b9b8b6ba)
