@@ -69,3 +69,57 @@ If a function or operation is synchronous, it is pushed onto the Call Stack and 
 --- The Event Loop also allows time for garbage collection, where memory that is no longer needed is freed up.
 
 ![alt text](https://github.com/user-attachments/assets/5231558f-40eb-47e6-974b-1164b9b8b6ba)
+
+
+## Queue
+### 1. Microtask Queue
+The microtask queue is for tasks that need to be executed immediately after the currently executing code completes, but before any I/O events or rendering can happen.
+
+Functions that go into the microtask queue:
+1. Promises: When a promise is resolved or rejected, its .then() or .catch() callbacks are placed in the microtask queue.
+2. Mutation Observers: These are used to detect changes to the DOM. Callbacks for mutation observers are also pushed into the microtask queue.
+3. queueMicrotask(): This is an API that allows you to manually queue a function into the microtask queue.
+Example:
+```
+console.log("start");
+
+Promise.resolve().then(() => {
+  console.log("promise callback");
+});
+
+queueMicrotask(() => {
+  console.log("microtask");
+});
+
+console.log("end");
+
+```
+output:`start
+end
+microtask
+promise callback
+`
+In this example, queueMicrotask and the promise callbacks are added to the microtask queue and executed after the synchronous code completes but before any tasks in the task queue.
+
+### 2. Task Queue (Macrotask Queue)
+The task queue is for tasks that need to be executed after the current code execution and microtasks are complete but before rendering and other browser events (like user input) can occur.
+
+#### Functions that go into the task queue:
+1. setTimeout: Callback functions passed to setTimeout are pushed into the task queue.
+2. setInterval: Similar to setTimeout, callbacks from setInterval are pushed here.
+3. I/O operations: Callback functions for tasks like network requests, file reading, and user input are also placed in the task queue.
+4. Message channels: Callbacks from postMessage or message events are processed in the task queue.
+5. ```
+    console.log("start");
+
+    setTimeout(() => {
+      console.log("timeout callback");
+    }, 0);
+    
+    console.log("end");
+
+   ```
+output:`start
+end
+timeout callback
+`
